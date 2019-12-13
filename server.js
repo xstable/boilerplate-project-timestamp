@@ -20,17 +20,19 @@ app.get("/", function(req, res) {
 
 app.get("/api/timestamp/:date_string", (req, res) => {
   let reqDate = req.params.date_string;
-  let respDate;
-  const pattern = /(\d{4})-(\d{2})-(\d{2})|(\d{13})/;
-  const newA = reqDate.match(pattern);
-  let reqDateArr;
-  reqDateArr = (newA === null) ? Date.now().toString() : newA[0];
-  respDate = reqDateArr.toString().length === 13 ? new Date(parseInt(reqDateArr)) : new Date(reqDate);
+  const respDate = new Date(reqDate.length === 13 ? parseInt(reqDate):reqDate);
   res.json({ 
           "unix": respDate.getTime(),
           "utc": respDate.toUTCString()
         });
 });
+app.get("/api/timestamp", (req, res)=>{
+  const respDate = new Date()
+  res.json({ 
+          "unix": respDate.getTime(),
+          "utc": respDate.toUTCString()
+        });
+})
 
 // your first API endpoint...
 app.get("/api/hello", function(req, res) {
