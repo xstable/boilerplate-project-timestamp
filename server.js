@@ -21,16 +21,18 @@ app.get("/", function(req, res) {
 app.get("/api/timestamp/:date_string", (req, res) => {
   let reqDate = req.params.date_string;
   const respDate = new Date(reqDate.length === 13 ? parseInt(reqDate):reqDate);
-  res.json({ 
-          "unix": respDate.getTime(),
+  const resTime = Number.isNaN(respDate.getTime()) ? null : respDate.getTime()
+  const ob = { 
+          "unix": resTime,
           "utc": respDate.toUTCString()
-        });
+        }
+  res.json(ob);
 });
 app.get("/api/timestamp", (req, res)=>{
   const respDate = new Date()
   res.json({ 
           "unix": respDate.getTime(),
-          "utc": respDate.toUTCString()
+          "utc" : respDate.toUTCString()
         });
 })
 
