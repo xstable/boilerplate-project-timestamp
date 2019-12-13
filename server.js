@@ -21,9 +21,8 @@ app.get("/", function(req, res) {
 app.get("/api/timestamp/:date_string", (req, res) => {
   let reqDate = req.params.date_string;
   const respDate = new Date(reqDate.length === 13 ? parseInt(reqDate):reqDate);
-  const resTime = Number.isNaN(respDate.getTime()) ? null : respDate.getTime()
   const ob = { 
-          "unix": resTime,
+          "unix": respDate.getTime(),
           "utc": respDate.toUTCString()
         }
   res.json(ob);
